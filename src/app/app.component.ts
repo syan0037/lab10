@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'movieAng';
+  // onChange(selection){
+  //   this.section= selection;
+  // }
+  // changeSection(sectionId){
+  //   section =1;
+  //   this.section = sectionId;
+  // }
 }
