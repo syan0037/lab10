@@ -8,10 +8,14 @@ module.exports = {
     // implement functions
 
     getAll: function (req, res) {
-        Movie.find(function (err, movies) {
+        // Movie.find(function (err, movies) {
+        //     if (err) return res.status(400).json(err);
+        //     res.json(movies);
+        // });
+        Movie.find({}).populate('actors').exec(function (err,movies){
             if (err) return res.status(400).json(err);
             res.json(movies);
-        });
+        })
     },
 
     createOne: function (req, res) {
@@ -60,18 +64,18 @@ module.exports = {
     //     });
     // },
 
+    // Add the actor into a movie
     addActor: function (req, res) {
-        Movie.findOne({ _id: req.params.id }, function (err, movie) {
+        Movie.findOne({title: req.params.title }, function (err, movie) {
             if (err) return res.status(400).json(err);
             if (!movie) return res.status(404).json();
-            Actor.findOne({ _id: req.body.id }, function (err, actor) {
+            Actor.findOne({name: req.params.name}, function (err, actor) {
                 if (err) return res.status(400).json(err);
                 if (!actor) return res.status(404).json();
 
                 movie.actors.push(actor._id);
                 movie.save(function (err) {
                     if (err) return res.status(500).json(err);
-                    
                     res.json(movie);
                 });
             })
@@ -103,16 +107,15 @@ module.exports = {
     },
 
     //5. Add an existing actor to the list of actors in a movie
-    // Add the actor into a movie
     updateActor: function(req, res){
         Movie.findOne({_id: req.params.id}, function (err, movie){
             if (err) return res.status(400).json(err);
             if (!movie) return res.status(404).json();
-            Actor.findOne({_id: req.params.actorId}, function (err,actor){
+            Actor.findOne({_id: req.params.id}, function (err,actor){
                 if (err) return res.status(400).json(err);
                 if (!actor) return res.status(404).json();
 
-                movie.actors.push(actor.actorId)
+                movie.actors.push(actor._id)
                 movie.save(function (err){
                     if (err) return res.status(500).json(err);
 
@@ -144,17 +147,10 @@ module.exports = {
 
     //delete all movies produced before aYear, aYear>year
     deleteMoviesBeforeAYear: function(req, res){
-        // Movie.where('year').lte(req.body.aYear).populate("actors").exec(function(err,movie){
-        //     if(err) return res.json(err);
-        //     if(!movie) return res.json();
-
-            Movie.deleteMany({year: {$lte: aYear}}, function(err,movie){
-             if(err) return res.json(err);
-             if(!movie) return res.json();
-             res.json(movie)
-            });
-        // });
+        let year = req.params.aYear;
+        Movie.deleteMany({year: {$lte: year}}, function(err,movie){
+            if(err) return res.json(err);
+            res.json(movie)
+        });
     }
-
-
 }

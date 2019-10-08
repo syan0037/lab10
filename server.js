@@ -53,7 +53,7 @@ app.get('/movies', movies.getAll);
 app.post('/movies', movies.createOne);
 app.get('/movies/:id', movies.getOne);
 app.put('/movies/:id', movies.updateOne);
-app.post('/movies/:id/actors', movies.addActor);
+// app.post('/movies/:id/actors', movies.addActor);
 // app.post('/movies/:title/name', movies.addActor);
 
 //1. Delete a movie by its ID (**OK**)
@@ -74,8 +74,8 @@ app.get('/movies', movies.getActors);
 
 
 // Add the actor into a movie
-app.post('/movies/:id/:actorId', movies.updateActor);
+app.put('/movies/:title/:name', movies.addActor);
 
 //delete all movies produced before aYear, aYear>year
-app.delete('/movies/aYear', movies.deleteMoviesBeforeAYear)
+app.delete('/moviesss/:aYear', movies.deleteMoviesBeforeAYear)
 

@@ -142,22 +142,25 @@
   <div class="section" *ngIf="section==7">
       <div class="form-group">
         <label for="movieName">delete all movies before this year</label>
-        <input type="text" class="form-control" id="movieName" [(ngModel)]="aYear">
-        <button type="submit" class="btn btn-primary" (click)="onDeleteAllMoviesBeforeThisYear(item)">delete</button>
+        <input type="text" class="form-control" id="movieYear" [(ngModel)]="aYear">
+        <button type="submit" class="btn btn-primary" (click)="onDeleteAllMoviesBeforeThisYear(aYear)">delete</button>
       </div>
   </div>
 
 
   <!-- Section 8: add an actor to a movie-->
   <div class="section" *ngIf="section==8">
+    <div class = "form-group">
+
     Add Actor
-    <select id="actorName" class="form-control" [(ngModel)]="name">
+    <select id="actorName" class="form-control" [(ngModel)]="fullName">
       <option *ngFor = "let item of actorsDB">{{item.name}}</option>
     </select>
     To Movie 
     <select id="movieName" class="form-control" [(ngModel)]="title">
       <option *ngFor = "let item of moviesDB">{{item.title}}</option>
     </select>
+  </div>
     <button type="submit" class="btn btn-primary" (click)="onAddActor()">Add</button>
 </div>
 
@@ -172,7 +175,7 @@
         <tr *ngFor="let item of moviesDB">
           <td>{{item.title}}</td>
           <td>{{item.year}}</td>
-          <td>{{item.actors}}</td>
+          <td *ngFor="let actor of item.actors">{{actor.name}}</td>
         </tr>
       </table>
     </div>

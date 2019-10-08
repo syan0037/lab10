@@ -52,24 +52,17 @@ export class DatabaseService {
     return this.http.delete(url, httpOptions);
   }
 
+
+
   deleteMoviesBeforeAYear(aYear){
-    let url = "/movies/" +  aYear;
+    let url = "/moviesss/" +  aYear;
     return this.http.delete(url,httpOptions)
   }
 
 
-  addActor(data){
-    // console.log(data);
-    
-    // let url = "/movies/" + data; 
-    //"movies/"+ data[]
-    let url = "/movies/" + data.id + "/"+ data.actorId;
-    return this.http.post(url, data, httpOptions)
+  addActor(title, name){
+    let url = "/movies/" + title+ "/"+ name;
+    return this.http.put(url, httpOptions)
   }
-
-  // addActor(fullName, title, data){
-  //   let url = "/actors/" + fullName + '/' + title;
-  //   return this.http.put(url, data, httpOptions)
-  // }
 
 }
